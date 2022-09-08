@@ -51,3 +51,53 @@ $ supabase secrets set --env-file ./supabase/.env
 $ supabase functions deploy pr-reminder
 $ supabase functions deploy pr-reminder-summary
 ```
+
+## Setup Scheduled Job
+
+To schedule a cron job for pr reminder & pr reminder summary,
+you need to activate two extension in Supabase Studio --> Database --> Extensions.
+
+- PG_CRON
+- HTTP
+
+This is an example script for pr reminder
+
+```sql
+select
+  cron.schedule(
+    'pr-reminder', -- name of the cron job
+    '* * * * *', -- every minute
+    $$
+    select status, content
+    from
+      http((
+          'POST',
+           'https://xxxxx.functions.supabase.co/pr-reminder', -- url to call edge function
+           ARRAY[http_header('Authorization','Bearer foobarbazabcxyz123')], -- change with service_url key
+           'application/json',
+           '{ "name": "test"}'
+        )::http_request)
+    $$
+  );
+```
+
+This is an example script for pr reminder summary
+
+```sql
+select
+  cron.schedule(
+    'pr-reminder-summary-morning', -- name of the cron job
+    '0 2 * * *', -- every 9:00 clock (2:00 UTC)
+    $$
+    select status, content
+    from
+      http((
+          'POST',
+           'https://xxxxx.functions.supabase.co/pr-reminder-summary', -- url to call edge function
+           ARRAY[http_header('Authorization','Bearer foobarbazabcxyz123')], -- change with service_url key
+           'application/json',
+           '{ "name": "test"}'
+        )::http_request)
+    $$
+  );
+```
