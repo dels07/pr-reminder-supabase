@@ -50,7 +50,7 @@ export const execute = async (): Promise<FnResult[] | void> => {
       `<a href="${url}">${title}</a> by ${author}`
     ).join("<br/>");
     const greeter =
-      `masih ada ${pullRequests.length} PR yang OPEN di repo ${config.bitbucket_repository}, dibantu review ya`;
+      `masih ada <strong>${pullRequests.length}</strong> PR yang OPEN di repo <strong>${config.bitbucket_repository}</strong>, dibantu review ya`;
     const message = `<flockml>${greeter}<br/>${links}</flockml>`;
 
     await sendMessage({
