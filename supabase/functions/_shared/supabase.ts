@@ -41,7 +41,7 @@ export const getConfigs = async (): Promise<Config[] | null> => {
 };
 
 export const getGreeter = async (): Promise<Greeter | null> => {
-  const { error, data } = await supabase.from("random_greeters")
+  const { error, data } = await supabase.from("greeters")
     .select()
     .limit(1)
     .single();
