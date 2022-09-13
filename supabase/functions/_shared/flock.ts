@@ -7,7 +7,9 @@ type FlockConfig = {
 
 export const sendMessage = async (config: FlockConfig, message: string) => {
   const url = `${config.baseUrl}/${config.channel}`;
-  const body = { flockml: message };
+  const body = JSON.stringify({
+    flockml: message,
+  });
 
   return await request("POST", url, body);
 };
