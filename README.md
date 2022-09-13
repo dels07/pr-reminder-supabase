@@ -32,7 +32,6 @@ $ cp ./supabase/.env.example ./supabase/.env.local
 
 # make sure you already have supabase account and supabase cli installed
 $ supabase login
-$ supabase init
 $ supabase start
 
 # for development of pr-reminder
@@ -42,6 +41,9 @@ $ supabase functions serve pr-reminder-summary --env-file ./supabase/.env.local
 
 # for connect to local db
 $ psql 'postgresql://postgres:postgres@localhost:54322/postgres'
+
+# for local supabase studio
+$ open http://localhost:54323
 
 # create migration for production
 # after you add/modify table in local database
@@ -69,13 +71,12 @@ flock_channel        : from webhook, insert only channel id
 flock_review_channel : from webhook, insert only channel id
 pr_authors           : use comma separated values (ex: Author 1,Author 2,Author 3), name must be same with the one from bitbucket
 active               : true/false, to enable/disable reminder for specific config
-
 ```
 
 ## Setup Scheduled Job
 
-To schedule a cron job for pr reminder & pr reminder summary,
-you need to activate two extension in **Supabase Studio --> Database --> Extensions**.
+To schedule a cron job for pr reminder & pr reminder summary, you need to
+activate two extension in **Supabase Studio --> Database --> Extensions**.
 
 - PG_CRON
 - HTTP
