@@ -42,6 +42,11 @@ $ supabase functions serve pr-reminder-summary --env-file ./supabase/.env.local
 
 # for connect to local db
 $ psql 'postgresql://postgres:postgres@localhost:54322/postgres'
+
+# create migration for production
+# after you add/modify table in local database
+$ supabase db diff migration_name -f file_name
+
 # running migration on production, before deployment
 $ supabase db push -p remote_db_password
 
@@ -52,10 +57,25 @@ $ supabase functions deploy pr-reminder
 $ supabase functions deploy pr-reminder-summary
 ```
 
+## Setup PR Reminder
+
+You need to fill several configurations within `configs` table in database.
+
+```
+bitbucket_repository : you can get it from url, format is organization/repo (ex: mid-kelola-indonesia/talenta-core)
+bitbucket_username   : self-explanatory
+bitbucket_password   : self-explanatory
+flock_channel        : from webhook, insert only channel id
+flock_review_channel : from webhook, insert only channel id
+pr_authors           : use comma separated values (ex: Author 1,Author 2,Author 3), name must be same with the one from bitbucket
+active               : true/false, to enable/disable reminder for specific config
+
+```
+
 ## Setup Scheduled Job
 
 To schedule a cron job for pr reminder & pr reminder summary,
-you need to activate two extension in Supabase Studio --> Database --> Extensions.
+you need to activate two extension in **Supabase Studio --> Database --> Extensions**.
 
 - PG_CRON
 - HTTP
