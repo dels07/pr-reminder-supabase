@@ -10,6 +10,7 @@ type Config = {
   flock_channel: string;
   flock_review_channel: string | null;
   pr_authors: string;
+  custom_greeter: boolean;
   active: boolean;
   created_at: string;
   updated_at: string | null;

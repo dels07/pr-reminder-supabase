@@ -66,7 +66,8 @@ export const execute = async (): Promise<FnResult[] | void> => {
           }, message);
         }
 
-        const greeter = await getRandomGreeter();
+        const greeter =
+          await (config.custom_greeter ? getRandomGreeter() : getGreeter());
         const message = `<flockml>${
           greeter?.message ?? ""
         }<br/><a href="${url}">${title}</a> by ${author}</flockml>`;
