@@ -45,6 +45,7 @@ export const getGreeter = async (): Promise<Greeter | null> => {
   const { error, data } = await supabase.from("greeters")
     .select()
     .limit(1)
+    .order('id', { ascending: true })
     .single();
 
   if (error) {
