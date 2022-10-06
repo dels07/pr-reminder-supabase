@@ -30,7 +30,7 @@ export const execute = async (): Promise<FnResult[] | void> => {
       username: config.bitbucket_username,
       password: config.bitbucket_password,
       authors: config.pr_authors?.split(",") ?? [],
-      interval: 1,
+      interval: +Deno.env.get("FETCH_INTERVAL")!,
     });
 
     const result = {
