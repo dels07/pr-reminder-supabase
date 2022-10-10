@@ -35,6 +35,12 @@ export const jakartaTime = () => {
   return dayjs().add(7, "hours").format();
 };
 
+export const isWeekend = () => {
+  const today = dayjs().format("ddd");
+
+  return ["Sun", "Sat"].includes(today);
+};
+
 export const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey",
