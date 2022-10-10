@@ -1,6 +1,6 @@
 import { getOpenPullRequests } from "../_shared/bitbucket.ts";
 import { sendMessage } from "../_shared/flock.ts";
-import { jakartaTime } from "../_shared/utils.ts";
+import { isWeekend, jakartaTime } from "../_shared/utils.ts";
 import { getConfigs } from "../_shared/supabase.ts";
 
 type FnResult = {
@@ -14,6 +14,18 @@ export const execute = async (): Promise<FnResult[] | void> => {
   const configs = await getConfigs();
 
   if (!configs) {
+    console.error(
+      `[${jakartaTime()}] No config(s) detected`,
+    );
+
+    return;
+  }
+
+  if (isWeekend()) {
+    console.info(
+      `[${jakartaTime()}] No PR summary on weekend`,
+    );
+
     return;
   }
 

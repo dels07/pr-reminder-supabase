@@ -44,7 +44,7 @@ export const getConfigs = async (): Promise<Config[] | null> => {
 export const getGreeter = async (): Promise<Greeter | null> => {
   const { error, data } = await supabase.from("greeters")
     .select()
-    .eq('id', 1)
+    .eq("id", 1)
     .single();
 
   if (error) {
