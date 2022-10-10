@@ -1,0 +1,23 @@
+INSERT INTO
+    greeters (message)
+VALUES
+    ('minta tolong review ya'),
+    ('masi butuh yang ijo-ijo nih gan'),
+    ('sundul gan'),
+    ('bantu up review yang ini donk'),
+    ('+1 anda akan sangat membantu'),
+    ('approval ijo, asiknya rame-rame'),
+    ('belum tau asiknya, klo belum pencet approve'),
+    ('yuk review yuk'),
+    ('up lapak'),
+    ('PR ini butuh review, fakta no 5 mencengangkan'),
+    ('review ya mumpung masi anget'),
+    ('di review dulu, sebelum kadaluarsa'),
+    ('guys mau nanya donk? ini kok belum di review'),
+    ('tanpa approval darimu, PR ini terasa hampa'),
+    ('main kesini ngeliat penyu (cakep), PR yang ini butuh reviu'),
+    ('dibantu ya, bim salabim jadi apa prok prok prok'),
+    ('PR PR apa yang belum di review? PR yang ini'),
+    ('berhubung WFH, kerjaan gue cuma bikin PR ini'),
+    ('sorry ya ini automation, bukan manual PR'),
+    ('mayday, P0, butuh cepet review (tapi boong)');
