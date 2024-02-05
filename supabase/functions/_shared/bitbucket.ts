@@ -1,4 +1,4 @@
-import dayjs from "https://deno.land/x/deno_dayjs/mod.ts";
+import dayjs from "https://deno.land/x/deno_dayjs@v0.5.0/mod.ts";
 
 import { jakartaTime, request } from "./utils.ts";
 
@@ -63,10 +63,15 @@ export const getOpenPullRequests = async (
     return [];
   }
 
-  const pullRequests = (json as BitbucketResponse).values;
+  let pullRequests = (json as BitbucketResponse).values;
+
+  if (config.authors.length) {
+    pullRequests = pullRequests.filter(({ author }) =>
+      config.authors.includes(author.display_name)
+    );
+  }
 
   return pullRequests
-    .filter(({ author }) => config.authors.includes(author.display_name))
     .map(({ title, author, links, destination }) => {
       return {
         title: title,

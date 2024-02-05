@@ -1,4 +1,4 @@
-import dayjs from "https://deno.land/x/deno_dayjs/mod.ts";
+import dayjs from "https://deno.land/x/deno_dayjs@v0.5.0/mod.ts";
 
 export const request = async (
   method: string,
