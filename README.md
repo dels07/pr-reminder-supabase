@@ -67,8 +67,10 @@ You need to fill several configurations within `configs` table in database.
 bitbucket_repository : you can get it from url, format is organization/repo (ex: mid-kelola-indonesia/talenta-core)
 bitbucket_username   : self-explanatory
 bitbucket_password   : self-explanatory
-flock_channel        : from webhook, insert only channel id
-flock_review_channel : from webhook, insert only channel id
+flock_channel        : (not supported anymore) from webhook, insert only channel id
+flock_review_channel : (not supported anymore) from webhook, insert only channel id
+gchat_channel        : from webhook, insert only channel id
+gchat_review_channel : (unsupported) from webhook, insert only channel id
 pr_authors           : use comma separated values (ex: Author 1,Author 2,Author 3), name must be same with the one from bitbucket
 active               : true/false, to enable/disable reminder for specific config
 ```
