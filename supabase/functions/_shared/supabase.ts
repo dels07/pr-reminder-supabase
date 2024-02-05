@@ -1,4 +1,4 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@^1.33.2";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@1.35.7";
 
 import { jakartaTime } from "./utils.ts";
 
@@ -9,6 +9,8 @@ type Config = {
   bitbucket_password: string;
   flock_channel: string;
   flock_review_channel: string | null;
+  gchat_channel: string;
+  gchat_review_channel: string | null;
   pr_authors: string;
   custom_greeter: boolean;
   active: boolean;

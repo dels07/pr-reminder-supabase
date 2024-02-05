@@ -59,15 +59,15 @@ export const execute = async (): Promise<FnResult[] | void> => {
     }
 
     const links = pullRequests.map(({ title, author, url }) =>
-      `<a href="${url}">${title}</a> by ${author}`
-    ).join("<br/>");
+      `<${url}|${title}> by ${author}`
+    ).join("\n");
     const greeter =
-      `masih ada <strong>${pullRequests.length}</strong> PR yang OPEN di repo <strong>${config.bitbucket_repository}</strong>, dibantu review ya`;
-    const message = `<flockml>${greeter}<br/>${links}</flockml>`;
+      `<users/all> masih ada *${pullRequests.length}* PR yang OPEN di repo *${config.bitbucket_repository}*, dibantu review ya`;
+    const message = `${greeter}\n${links}`;
 
     await sendMessage({
-      baseUrl: Deno.env.get("FLOCK_BASE_URL")!,
-      channel: config.flock_channel,
+      baseUrl: Deno.env.get("GCHAT_BASE_URL")!,
+      channel: config.gchat_channel,
     }, message);
   }
 

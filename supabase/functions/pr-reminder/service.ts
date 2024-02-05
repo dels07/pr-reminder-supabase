@@ -1,5 +1,5 @@
 import { getOpenPullRequests } from "../_shared/bitbucket.ts";
-import { sendMessage } from "../_shared/flock.ts";
+import { sendMessage } from "../_shared/gchat.ts";
 import { jakartaTime } from "../_shared/utils.ts";
 import {
   getConfigs,
@@ -52,29 +52,15 @@ export const execute = async (): Promise<FnResult[] | void> => {
 
     await Promise.allSettled(
       pullRequests.map(async ({ title, author, url, target }) => {
-        if (
-          target.search("master|release") !== -1 && config.flock_review_channel
-        ) {
-          const greeter = await getGreeter();
-          const message = `<flockml>${
-            greeter?.message ?? ""
-          }<br/><a href="${url}">${title}</a> by ${author}</flockml>`;
-
-          await sendMessage({
-            baseUrl: Deno.env.get("FLOCK_BASE_URL")!,
-            channel: config.flock_review_channel,
-          }, message);
-        }
-
         const greeter =
           await (config.custom_greeter ? getRandomGreeter() : getGreeter());
-        const message = `<flockml>${
+        const message = `<users/all> ${
           greeter?.message ?? ""
-        }<br/><a href="${url}">${title}</a> by ${author}</flockml>`;
+        }\n<${url}|${title}> by ${author}`;
 
         await sendMessage({
-          baseUrl: Deno.env.get("FLOCK_BASE_URL")!,
-          channel: config.flock_channel,
+          baseUrl: Deno.env.get("GCHAT_BASE_URL")!,
+          channel: config.gchat_channel,
         }, message);
       }),
     );
