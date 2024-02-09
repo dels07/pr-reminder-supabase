@@ -21,17 +21,31 @@ export const execute = async (): Promise<FnResult[] | void> => {
     return;
   }
 
-  const results: FnResult[] = [];
-
-  for (const config of configs) {
-    const pullRequests = await getOpenPullRequests({
+  const pullRequestsPromises = configs.map((config) =>
+    getOpenPullRequests({
       baseUrl: Deno.env.get("BITBUCKET_BASE_URL")!,
       repository: config.bitbucket_repository,
       username: config.bitbucket_username,
       password: config.bitbucket_password,
       authors: config.pr_authors?.split(",") ?? [],
       interval: +Deno.env.get("FETCH_INTERVAL")!,
-    });
+    }).then((pullRequests) => ({
+      config,
+      pullRequests,
+    }))
+  );
+
+  const pullRequestsResults = await Promise.allSettled(pullRequestsPromises);
+
+  const results: FnResult[] = [];
+
+  for (const pullRequestsResult of pullRequestsResults) {
+    if (pullRequestsResult.status === "rejected") {
+      console.error(`Failed to get open pull requests: ${pullRequestsResult.reason}`);
+      continue;
+    }
+
+    const { config, pullRequests } = pullRequestsResult.value;
 
     const result = {
       type: "regular",
@@ -51,7 +65,7 @@ export const execute = async (): Promise<FnResult[] | void> => {
     }
 
     await Promise.allSettled(
-      pullRequests.map(async ({ title, author, url, target }) => {
+      pullRequests.map(async ({ title, author, url }) => {
         const greeter =
           await (config.custom_greeter ? getRandomGreeter() : getGreeter());
         const message = `<users/all> ${
