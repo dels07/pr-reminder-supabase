@@ -1,5 +1,5 @@
 import { getOpenPullRequests } from "../_shared/bitbucket.ts";
-import { sendMessage } from "../_shared/flock.ts";
+import { sendMessage } from "../_shared/gchat.ts";
 import { isWeekend, jakartaTime } from "../_shared/utils.ts";
 import { getConfigs } from "../_shared/supabase.ts";
 
