@@ -6,29 +6,33 @@ export const request = async (
   body?: string | null,
   credential?: string | null,
 ) => {
-  const options: RequestInit = {
-    method,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-    },
-  };
+  try {
+    const options: RequestInit = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    };
 
-  if (body) {
-    options.body = body;
+    if (body) {
+      options.body = body;
+    }
+
+    if (credential) {
+      const reqHeaders = new Headers(options.headers);
+      reqHeaders.set("Authorization", `Basic ${credential}`);
+
+      options.headers = reqHeaders;
+    }
+
+    const res = await fetch(url, options);
+    const json = await res.json();
+
+    return json;
+  } catch (error) {
+    console.error('utils: request', error)
   }
-
-  if (credential) {
-    const reqHeaders = new Headers(options.headers);
-    reqHeaders.set("Authorization", `Basic ${credential}`);
-
-    options.headers = reqHeaders;
-  }
-
-  const res = await fetch(url, options);
-  const json = await res.json();
-
-  return json;
 };
 
 export const jakartaTime = () => {

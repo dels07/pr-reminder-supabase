@@ -6,10 +6,14 @@ type GChatConfig = {
 };
 
 export const sendMessage = async (config: GChatConfig, message: string) => {
-  const url = `${config.baseUrl}/${config.channel}`;
-  const body = JSON.stringify({
-    text: message,
-  });
+  try {
+    const url = `${config.baseUrl}/${config.channel}`;
+    const body = JSON.stringify({
+      text: message,
+    });
 
-  return await request("POST", url, body);
+    return await request("POST", url, body);
+  } catch (error) {
+    console.error('gchat: sendMessage', error);
+  }
 };
